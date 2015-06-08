@@ -1,8 +1,21 @@
-# Elb-Log - ELB log manager for Common Lisp
+# Elb Log - ELB log manager for Common Lisp
 
 ## Usage
 
-## Installation
+```Lisp
+(with-elb-log  ((cons (asdf::getenv "AWS_ACCESS_KEY") (asdf::getenv "AWS_SECRET_KEY")) "elb-log")
+  (dolist (key (log-keys))
+    (do-something (log-key-content key))))
+
+;;; Same as above
+
+(let* ((elb-log (make-elb-log (cons (asdf::getenv "AWS_ACCESS_KEY") (asdf::getenv "AWS_SECRET_KEY")) "elb-log"))
+       (log-bucket (make-log-bucket elb-log)))
+  (dolist (key (log-keys log-bucket))
+    (do-something (log-key-content key))))
+```
+
+## API
 
 ## Author
 

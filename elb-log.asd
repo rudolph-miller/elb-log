@@ -18,11 +18,15 @@
   :version "0.1"
   :author "Rudolph Miller"
   :license "LLGPL"
-  :depends-on (:cl-ppcre
-               :zs3)
+  :depends-on (:cl-syntax
+               :cl-ppcre
+               :zs3
+               :local-time)
   :components ((:module "src"
+                :serial t
                 :components
-                ((:file "elb-log"))))
+                ((:file "util")
+                 (:file "elb-log"))))
   :description "ELB log manager for Common Lisp"
   :long-description
   #.(with-open-file (stream (merge-pathnames
