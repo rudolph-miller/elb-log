@@ -37,7 +37,7 @@
            :log-key-hash
            :log-key-key
            :log-keys
-           :log-key-content))
+           :log-lines))
 (in-package :elb-log)
 
 (defvar *elb-log* nil)
@@ -95,6 +95,50 @@
         when log-key
           collecting log-key))
 
-(defun log-key-content (log-key &key (bucket *log-bucket*))
-  (get-string (bucket-name (log-bucket-bucket bucket)) (log-key-key log-key)
-              :credentials (log-bucket-elb-log bucket)))
+(defstruct log-line
+  (time nil :type (or null string))
+  (elb-name nil :type (or null string))
+  (client nil :type (or null string))
+  (client-port nil :type (or null string))
+  (backend nil :type (or null string))
+  (backend-port nil :type (or null string))
+  (request-processing-time nil :type (or null string))
+  (backend-processing-time nil :type (or null string))
+  (response-processing-time nil :type (or null string))
+  (elb-status-code nil :type (or null string))
+  (backend-status-code nil :type (or null string))
+  (received-bytes nil :type (or null string))
+  (sent-bytes nil :type (or null string))
+  (request-method nil :type (or null string))
+  (request-uri nil :type (or null string))
+  (request-protocol nil :type (or null string)))
+
+(defun make-log-line-from-string (string)
+  (register-groups-bind (time elb-name client client-port backend backend-port request-processing-time
+                         backend-processing-time response-processing-time elb-status-code backend-status-code
+                         received-bytes sent-bytes request-method request-uri request-protocol)
+      (*log-line-scanner* string)
+    (make-log-line :time time
+                   :elb-name elb-name
+                   :client client
+                   :client-port client-port
+                   :backend backend
+                   :backend-port backend-port
+                   :request-processing-time request-processing-time
+                   :backend-processing-time backend-processing-time
+                   :request-processing-time response-processing-time
+                   :elb-status-code elb-status-code
+                   :backend-status-code backend-status-code
+                   :received-bytes received-bytes
+                   :sent-bytes sent-bytes
+                   :request-method request-method
+                   :request-uri request-uri
+                   :request-protocol request-protocol)))
+
+(defun log-lines (log-key &key (bucket *log-bucket*))
+  (let ((stream (make-string-input-stream (get-string (bucket-name (log-bucket-bucket bucket))
+                                                      (log-key-key log-key)
+                                                      :credentials (log-bucket-elb-log bucket)))))
+    (loop for line = (read-line stream nil)
+          while line
+          collecting (make-log-line-from-string line))))

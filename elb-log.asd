@@ -19,6 +19,7 @@
   :author "Rudolph Miller"
   :license "LLGPL"
   :depends-on (:cl-syntax
+               :cl-syntax-interpol
                :cl-ppcre
                :zs3
                :local-time)
