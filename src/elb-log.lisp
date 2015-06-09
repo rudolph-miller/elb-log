@@ -4,19 +4,13 @@
         :elb-log.util
         :elb-log.struct)
   (:import-from :zs3
-                :bucket-listing
                 :bucket-name
-                :key
                 :name
-                :access-key
-                :secret-key
                 :query-bucket
                 :keys
                 :get-string)
   (:import-from :local-time
-                :timestamp
-                :today
-                :parse-timestring)
+                :today)
   (:export ;; globals
            :*elb-log*
            :*log-bucket*

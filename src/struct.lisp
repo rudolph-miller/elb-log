@@ -119,6 +119,7 @@
   (request-protocol nil :type (or null string)))
 
 (defun make-log-line (string)
+  (defvar b string)
   (register-groups-bind ((#'parse-timestring time) elb-name client (#'parse-integer client-port) backend
                          (#'parse-integer backend-port)
                          (#'read-from-string request-processing-time backend-processing-time response-processing-time)

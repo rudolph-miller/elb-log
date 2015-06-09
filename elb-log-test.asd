@@ -15,7 +15,8 @@
                :prove)
   :components ((:module "t"
                 :components
-                ((:test-file "util")
+                ((:file "init")
+                 (:test-file "util")
                  (:test-file "struct")
                  (:test-file "elb-log"))))
   :description "Test system for elb-log"

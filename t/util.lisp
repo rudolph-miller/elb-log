@@ -4,24 +4,37 @@
         :prove
         :ppcre
         :local-time
-        :elb-log.util))
+        :elb-log.util
+        :elb-log-test.init))
 (in-package :elb-log-test.util)
 
 (plan nil)
 
 (subtest "*key-scanner*"
-  )
-
-(subtest "*timestamp-scanner*"
-  )
+  (is (scan-to-strings *key-scanner* *sample-key*)
+      *sample-key*
+      "can scan the whole key."))
 
 (subtest "*log-line-scanner*"
-  )
+  (is (scan-to-strings *log-line-scanner* *sample-log*)
+      *sample-log*
+      "can scan the whole line."))
 
-(subtest "parse-date")
+(subtest "parse-date"
+  (is (parse-date "2014/12/31")
+      (encode-timestamp 0 0 0 0 31 12 2014 :timezone +utc-zone+)
+      "can parse YYYY/MM/DD."
+      :test #'timestamp=))
 
-(subtest "parse-timestamp")
+(subtest "parse-timestamp"
+  (is (parse-timestamp "20140215T2339Z")
+      (encode-timestamp 0 0 39 23 15 02 2014 :timezone +utc-zone+)
+      "can parse YYYYMMDDTHHmmZ."
+      :test #'timestamp=))
 
-(subtest "format-date")
+(subtest "format-date"
+  (is (format-date (encode-timestamp 0 0 0 0 31 12 2014 :timezone +utc-zone+))
+      "2014/12/31"
+      "can format date."))
 
 (finalize)

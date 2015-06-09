@@ -10,7 +10,6 @@
                 :encode-timestamp
                 :format-timestring)
   (:export :*key-scanner*
-           :*timestamp-scanner*
            :*log-line-scanner*
            :parse-date
            :parse-timestamp
