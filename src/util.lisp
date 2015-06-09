@@ -7,12 +7,14 @@
   (:import-from :local-time
                 :+utc-zone+
                 :parse-timestring
-                :encode-timestamp)
+                :encode-timestamp
+                :format-timestring)
   (:export :*key-scanner*
            :*timestamp-scanner*
            :*log-line-scanner*
            :parse-date
-           :parse-timestamp))
+           :parse-timestamp
+           :format-date))
 (in-package :elb-log.util)
 
 (syntax:use-syntax :cl-interpol)
@@ -29,3 +31,6 @@
 (defun parse-timestamp (timestamp)
   (register-groups-bind ((#'parse-integer year month day hour minute)) (*timestamp-scanner* timestamp)
     (encode-timestamp 0 0 minute hour day month year :timezone +utc-zone+)))
+
+(defun format-date (date)
+  (format-timestring nil date :format '(:year "/" (:month 2 #\0) "/" (:day 2 #\0)) :timezone +utc-zone+))

@@ -27,6 +27,7 @@
                 :serial t
                 :components
                 ((:file "util")
+                 (:file "struct")
                  (:file "elb-log"))))
   :description "ELB log manager for Common Lisp"
   :long-description
