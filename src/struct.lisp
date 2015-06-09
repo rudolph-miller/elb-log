@@ -49,7 +49,7 @@
            :log-line-backend-port
            :log-line-request-processing-time
            :log-line-backend-processing-time
-           :log-line-request-processing-time
+           :log-line-response-processing-time
            :log-line-elb-status-code
            :log-line-backend-status-code
            :log-line-received-bytes
@@ -134,7 +134,7 @@
                    :backend-port backend-port
                    :request-processing-time request-processing-time
                    :backend-processing-time backend-processing-time
-                   :request-processing-time response-processing-time
+                   :response-processing-time response-processing-time
                    :elb-status-code elb-status-code
                    :backend-status-code backend-status-code
                    :received-bytes received-bytes
