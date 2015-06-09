@@ -7,15 +7,12 @@ checkout:
     - curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh
 
 dependencies:
-  pre:
-    - git clone https://github.com/fukamachi/cl-coveralls ~/lisp/cl-coveralls
   cache_directories:
     - ~/.roswell
     
 test:
   override:
     - ros run -- --version
-    - ros -s prove -s cl-coveralls
-          -e '(or (coveralls:with-coveralls (:exclude (list "t"))
-                    (prove:run :elb-log-test))
+    - ros -s prove
+          -e '(or (prove:run :elb-log-test)
                   (uiop:quit -1))'
