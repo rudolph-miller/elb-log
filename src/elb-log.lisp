@@ -15,7 +15,8 @@
   (:import-from :ppcre
                 :register-groups-bind)
   (:import-from :local-time
-                :timestamp)
+                :timestamp
+                :parse-timestring)
   (:export :*elb-log*
            :*log-bucket*
            :elb-log
@@ -113,27 +114,29 @@
           collecting log-key))
 
 (defstruct log-line
-  (time nil :type (or null string))
+  (time nil :type (or null timestamp))
   (elb-name nil :type (or null string))
   (client nil :type (or null string))
-  (client-port nil :type (or null string))
+  (client-port nil :type (or null integer))
   (backend nil :type (or null string))
-  (backend-port nil :type (or null string))
-  (request-processing-time nil :type (or null string))
-  (backend-processing-time nil :type (or null string))
-  (response-processing-time nil :type (or null string))
-  (elb-status-code nil :type (or null string))
-  (backend-status-code nil :type (or null string))
-  (received-bytes nil :type (or null string))
-  (sent-bytes nil :type (or null string))
+  (backend-port nil :type (or null integer))
+  (request-processing-time nil :type (or null float))
+  (backend-processing-time nil :type (or null float))
+  (response-processing-time nil :type (or null float))
+  (elb-status-code nil :type (or null integer))
+  (backend-status-code nil :type (or null integer))
+  (received-bytes nil :type (or null integer))
+  (sent-bytes nil :type (or null integer))
   (request-method nil :type (or null string))
   (request-uri nil :type (or null string))
   (request-protocol nil :type (or null string)))
 
 (defun make-log-line-from-string (string)
-  (register-groups-bind (time elb-name client client-port backend backend-port request-processing-time
-                         backend-processing-time response-processing-time elb-status-code backend-status-code
-                         received-bytes sent-bytes request-method request-uri request-protocol)
+  (register-groups-bind ((#'parse-timestring time) elb-name client (#'parse-integer client-port) backend
+                         (#'parse-integer backend-port)
+                         (#'read-from-string request-processing-time backend-processing-time response-processing-time)
+                         (#'parse-integer elb-status-code backend-status-code received-bytes sent-bytes)
+                         request-method request-uri request-protocol)
       (*log-line-scanner* string)
     (make-log-line :time time
                    :elb-name elb-name
