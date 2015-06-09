@@ -37,6 +37,23 @@
            :log-key-hash
            :log-key-key
            :log-keys
+           :log-line
+           :log-line-time
+           :log-line-elb-name
+           :log-line-client
+           :log-line-client-port
+           :log-line-backend
+           :log-line-backend-port
+           :log-line-request-processing-time
+           :log-line-backend-processing-time
+           :log-line-request-processing-time
+           :log-line-elb-status-code
+           :log-line-backend-status-code
+           :log-line-received-bytes
+           :log-line-sent-bytes
+           :log-line-request-method
+           :log-line-request-uri
+           :log-line-request-protocol
            :log-lines))
 (in-package :elb-log)
 
