@@ -1,0 +1,15 @@
+checkout:
+  pre:
+    - curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh
+
+dependencies:
+  pre:
+    - case $CIRCLE_NODE_INDEX in 0) ;; 1) ros install ccl-bin ;; esac
+    - git clone https://github.com/fukamachi/cl-coveralls ~/lisp/cl-coveralls
+    
+test:
+  override:
+    - ros -s prove -s cl-coveralls
+          -e '(or (coveralls:with-coveralls (:exclude (list "t"))
+                    (prove:run :elb-log-test))
+                  (uiop:quit -1))'
