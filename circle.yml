@@ -4,13 +4,13 @@ checkout:
 
 dependencies:
   pre:
-    - case $CIRCLE_NODE_INDEX in 0) ros use sbcl-bin/1.2.12 ;; 1) ros install ccl-bin/1.10; ros use ccl-bin/1.10 ;; esac
     - git clone https://github.com/fukamachi/cl-coveralls ~/lisp/cl-coveralls
   cache_directories:
     - ~/.roswell
     
 test:
   override:
+    - case $CIRCLE_NODE_INDEX in 0) ros use sbcl-bin/1.2.12 ;; 1) ros install ccl-bin/1.10; ros use ccl-bin/1.10 ;; esac
     - ros run -- --version
     - ros -s prove -s cl-coveralls
           -e '(or (coveralls:with-coveralls (:exclude (list "t"))
