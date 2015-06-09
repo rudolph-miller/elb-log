@@ -6,6 +6,8 @@ dependencies:
   pre:
     - case $CIRCLE_NODE_INDEX in 0) ;; 1) ros install ccl-bin ;; esac
     - git clone https://github.com/fukamachi/cl-coveralls ~/lisp/cl-coveralls
+  cache_directories:
+    - "$HOME/.roswell"
     
 test:
   override:
