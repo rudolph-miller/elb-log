@@ -25,10 +25,10 @@
         "can set bucket-name.")))
 
 (subtest "log-bucket"
-  (skip 1 "have to test via S3."))
+  (skip 1 "have to test via S3 or stub connection."))
 
 (subtest "log-key"
-  (skip 1 "have to test via S3."))
+  (skip 1 "have to test via S3 or stub connection."))
 
 (subtest "log-line"
   (let ((obj (make-log-line *sample-log*)))
