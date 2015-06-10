@@ -76,28 +76,28 @@
 
 (defvar *log-date* nil)
 
-(defun set-accout-id-and-region (obj)
-  (let ((bucket (query-bucket (elb-log-bucket-name obj) :max-keys 5 :credentials obj)))
+(defun set-accout-id-and-region (elb-log)
+  (let ((bucket (query-bucket (elb-log-bucket-name elb-log) :max-keys 5 :credentials elb-log)))
     (loop for key across (keys bucket)
           for log-key = (make-log-key key)
           when log-key
-            do (setf (elb-log-account-id obj) (log-key-account-id log-key)
-                     (elb-log-region obj) (log-key-region log-key))
+            do (setf (elb-log-account-id elb-log) (log-key-account-id log-key)
+                     (elb-log-region elb-log) (log-key-region log-key))
                (return-from set-accout-id-and-region t)
           finally (error "Could not set-accout-id and region."))))
 
-(defun format-bucket-prefix (date &optional (obj *elb-log*))
-  (unless (and (elb-log-account-id obj)
-               (elb-log-region obj))
-    (set-accout-id-and-region obj))
-  (format nil "AWSLogs/~a/elasticloadbalancing/~a/~a" (elb-log-account-id obj) (elb-log-region obj) (format-date date)))
+(defun format-bucket-prefix (date &optional (elb-log *elb-log*))
+  (unless (and (elb-log-account-id elb-log)
+               (elb-log-region elb-log))
+    (set-accout-id-and-region elb-log))
+  (format nil "AWSLogs/~a/elasticloadbalancing/~a/~a" (elb-log-account-id elb-log) (elb-log-region elb-log) (format-date date)))
 
-(defun make-log-bucket (&optional (obj *elb-log*) (date *log-date*))
-  (let ((bucket (query-bucket (elb-log-bucket-name obj)
-                              :credentials obj
+(defun make-log-bucket (&optional (elb-log *elb-log*) (date *log-date*))
+  (let ((bucket (query-bucket (elb-log-bucket-name elb-log)
+                              :credentials elb-log
                               :prefix (when date (format-bucket-prefix date)))))
     (%make-log-bucket :bucket bucket
-                      :elb-log obj)))
+                      :elb-log elb-log)))
 
 (defmacro with-elb-log ((credentials bucket-name) &body body)
   `(let* ((*elb-log* (make-elb-log ,credentials ,bucket-name))
