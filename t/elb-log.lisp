@@ -19,7 +19,7 @@
   (skip 1 "have to test via S3 or stub connection."))
 
 (subtest "format-bucket-prefix"
-  (let ((date (encode-timestamp 0 0 0 0 31 12 2014))
+  (let ((date (encode-timestamp 0 0 0 0 31 12 2014 :timezone +utc-zone+))
         (elb-log (make-elb-log (cons "ACCESS_KEY" "SECRET_KEY") "elb-log")))
     (setf (elb-log-account-id elb-log) "ACCOUNT_ID")
     (setf (elb-log-region elb-log) "ap-northeast-1")
