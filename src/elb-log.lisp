@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage elb-log
   (:use :cl
+        :annot.doc
         :elb-log.util
         :elb-log.struct)
   (:import-from :zs3
@@ -24,11 +25,13 @@
            :elb-log-bucket-name
            :elb-log-accout-id
            :elb-log-region
+           :make-elb-log
 
            ;; log-bucket
            :log-bucket
            :log-bucket-bucket
            :log-bucket-elb-log
+           :make-log-bucket
 
            ;; log-key
            :log-key
@@ -70,10 +73,18 @@
            :log-lines))
 (in-package :elb-log)
 
+(syntax:use-syntax :cl-annot)
+
+@doc
+"Default value of #S(elb-log)."
 (defvar *elb-log* nil)
 
+@doc
+"Default value of #S(log-bucket)."
 (defvar *log-bucket* nil)
 
+@doc
+"Default value of date used by #'make-log-bucket."
 (defvar *log-date* nil)
 
 (defun set-accout-id-and-region (elb-log)
@@ -92,6 +103,10 @@
     (set-accout-id-and-region elb-log))
   (format nil "AWSLogs/~a/elasticloadbalancing/~a/~a" (elb-log-account-id elb-log) (elb-log-region elb-log) (format-date date)))
 
+@doc
+"Return #S(log-bucket).
+ELB-LOG should be #S(elb-log).
+DATE should be an instance of loca-time:timestamp."
 (defun make-log-bucket (&optional (elb-log *elb-log*) (date *log-date*))
   (let ((bucket (query-bucket (elb-log-bucket-name elb-log)
                               :credentials elb-log
@@ -99,24 +114,39 @@
     (%make-log-bucket :bucket bucket
                       :elb-log elb-log)))
 
+@doc
+"Bind *elb-log* to #S(elb-log credentials bucket-name),
+*log-bucket* to #S(log-bucket bucket *elb-log*)."
 (defmacro with-elb-log ((credentials bucket-name) &body body)
   `(let* ((*elb-log* (make-elb-log ,credentials ,bucket-name))
           (*log-bucket* (make-log-bucket)))
      ,@body))
 
+@doc
+"Bind *elb-log* to #S(elb-log credentials bucket-name),
+*log-bucket* to #S(log-bucket bucket *elb-log*),
+*log-date* to date."
 (defmacro with-specified-date-elb-log (date (credentials bucket-name) &body body)
   `(let ((*log-date* ,date))
      (with-elb-log (,credentials ,bucket-name) ,@body)))
 
+@doc
+"Bind *elb-log* to #S(elb-log credentials bucket-name),
+*log-bucket* to #S(log-bucket bucket *elb-log*),
+*log-date* to (local-time:today)."
 (defmacro with-this-elb-log ((credentials bucket-name) &body body)
   `(with-specified-date-elb-log (today) (,credentials ,bucket-name) ,@body))
 
+@doc
+"Return a list of #S(log-key)."
 (defun log-keys (&optional (bucket *log-bucket*))
   (loop for key across (keys (log-bucket-bucket bucket))
         for log-key = (make-log-key key)
         when log-key
           collecting log-key))
 
+@doc
+"Return a list of #S(log-line)."
 (defun log-lines (log-key &key (bucket *log-bucket*))
   (let ((stream (make-string-input-stream (get-string (bucket-name (log-bucket-bucket bucket))
                                                       (log-key-key log-key)

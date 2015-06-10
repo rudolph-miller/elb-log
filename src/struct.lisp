@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage elb-log.struct
   (:use :cl
+        :annot.doc
         :elb-log.util)
   (:import-from :zs3
                 :bucket-listing
@@ -60,12 +61,20 @@
            :make-log-line))
 (in-package :elb-log.struct)
 
+(syntax:use-syntax :cl-annot)
+
+@doc
+"Struct of account information."
 (defstruct (elb-log (:constructor %make-elb-log))
   (credentials nil :type cons)
   (bucket-name nil :type string)
   (account-id nil :type (or null string))
   (region nil :type (or null string)))
 
+@doc
+"Return #S(elb-log credentials bucket-name).
+CREDENTIALS should be (cons \"AWS_ACCESS_KEY\" \"AWS_SECRET_KEY\").
+BUCKET-NAME should be bucket name of ELB log."
 (defun make-elb-log (credentials bucket-name)
   (%make-elb-log :credentials credentials :bucket-name bucket-name))
 
@@ -75,10 +84,14 @@
 (defmethod secret-key ((obj elb-log))
   (cdr (elb-log-credentials obj)))
 
+@doc
+"Struct of ELB log bucket."
 (defstruct (log-bucket (:constructor %make-log-bucket))
   (bucket nil :type (or null bucket-listing))
   (elb-log nil :type (or null elb-log)))
 
+@doc
+"Struct of ELB log object key."
 (defstruct (log-key (:constructor %make-log-key))
   (account-id nil :type (or null string))
   (region nil :type (or null string))
@@ -100,6 +113,8 @@
                   :hash hash
                   :key key)))
 
+@doc
+"Struct of ELB log line."
 (defstruct (log-line (:constructor %make-log-line))
   (time nil :type (or null timestamp))
   (elb-name nil :type (or null string))
@@ -119,7 +134,6 @@
   (request-protocol nil :type (or null string)))
 
 (defun make-log-line (string)
-  (defvar b string)
   (register-groups-bind ((#'parse-timestring time) elb-name client (#'parse-integer client-port) backend
                          (#'parse-integer backend-port)
                          (#'read-from-string request-processing-time backend-processing-time response-processing-time)

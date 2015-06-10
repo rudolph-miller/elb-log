@@ -20,6 +20,7 @@
   :license "LLGPL"
   :depends-on (:cl-syntax
                :cl-syntax-interpol
+               :cl-syntax-annot
                :cl-ppcre
                :zs3
                :local-time)
