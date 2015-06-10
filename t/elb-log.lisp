@@ -85,8 +85,10 @@
                               :elb-log *elb-log*)
             "can bind *log-bucket*.")))))
 
-(subtest "log-keys")
+(subtest "log-keys"
+  (skip 1 "have to test via S3."))
 
-(subtest "log-lines")
+(subtest "log-lines"
+  (skip 1 "have to test via S3."))
 
 (finalize)
