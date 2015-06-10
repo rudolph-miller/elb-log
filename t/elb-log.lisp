@@ -24,7 +24,7 @@
     (setf (elb-log-account-id elb-log) "ACCOUNT_ID")
     (setf (elb-log-region elb-log) "ap-northeast-1")
     (is (format-bucket-prefix date elb-log)
-        "AWSLogs/ACCOUNT_ID/elasticloadbalancing/ap-northeast-1/2014/12/30"
+        "AWSLogs/ACCOUNT_ID/elasticloadbalancing/ap-northeast-1/2014/12/31"
         "can format bucket prefix with the date.")))
 
 (subtest "make-log-bucket"
