@@ -110,6 +110,9 @@
 ELB-LOG should be #S(elb-log).
 DATE should be an instance of loca-time:timestamp."
 (defun make-log-bucket (&optional (elb-log *elb-log*) (date *log-date*) max-keys)
+  (when (> max-keys 1000)
+    (warn "Note that Amazon currently limits responses to at most 1000 key objects even if max-keys is greater than 1000
+"))
   (let* ((zs3:*credentials* elb-log)
          (buckets (loop for bucket = (query-bucket (elb-log-bucket-name elb-log)
                                                    :prefix (when date (format-bucket-prefix date))
