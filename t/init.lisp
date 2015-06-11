@@ -36,6 +36,6 @@
 
 (defmacro with-stub-make-log-bucket (&body body)
   `(with-stubs ((make-log-bucket . #'(lambda (&optional (elb-log *elb-log*))
-                                       (%make-log-bucket :bucket nil
+                                       (%make-log-bucket :buckets nil
                                                          :elb-log elb-log))))
      ,@body))

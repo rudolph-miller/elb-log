@@ -4,7 +4,6 @@
         :annot.doc
         :elb-log.util)
   (:import-from :zs3
-                :bucket-listing
                 :key
                 :name
                 :access-key
@@ -24,7 +23,7 @@
 
            ;; log-bucket
            :log-bucket
-           :log-bucket-bucket
+           :log-bucket-buckets
            :log-bucket-elb-log
            :%make-log-bucket
 
@@ -87,7 +86,7 @@ BUCKET-NAME should be bucket name of ELB log."
 @doc
 "Struct of ELB log bucket."
 (defstruct (log-bucket (:constructor %make-log-bucket))
-  (bucket nil :type (or null bucket-listing))
+  (buckets nil :type list)
   (elb-log nil :type (or null elb-log)))
 
 @doc

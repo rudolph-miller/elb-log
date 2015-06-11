@@ -41,7 +41,7 @@
             "can bind *elb-log*.")
 
         (is *log-bucket*
-            (%make-log-bucket :bucket nil
+            (%make-log-bucket :buckets nil
                               :elb-log *elb-log*)
             "can bind *log-bucket*.")))))
 
@@ -61,7 +61,7 @@
             "can bind *elb-log*.")
 
         (is *log-bucket*
-            (%make-log-bucket :bucket nil
+            (%make-log-bucket :buckets nil
                               :elb-log *elb-log*)
             "can bind *log-bucket*.")))))
 
@@ -81,7 +81,7 @@
             "can bind *elb-log*.")
 
         (is *log-bucket*
-            (%make-log-bucket :bucket nil
+            (%make-log-bucket :buckets nil
                               :elb-log *elb-log*)
             "can bind *log-bucket*.")))))
 

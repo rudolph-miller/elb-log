@@ -8,7 +8,9 @@
                 :bucket-name
                 :name
                 :query-bucket
+                :continue-bucket-query
                 :keys
+                :truncatedp
                 :get-string)
   (:import-from :local-time
                 :today)
@@ -29,7 +31,7 @@
 
            ;; log-bucket
            :log-bucket
-           :log-bucket-bucket
+           :log-bucket-buckets
            :log-bucket-elb-log
            :make-log-bucket
 
@@ -108,10 +110,13 @@
 ELB-LOG should be #S(elb-log).
 DATE should be an instance of loca-time:timestamp."
 (defun make-log-bucket (&optional (elb-log *elb-log*) (date *log-date*))
-  (let ((bucket (query-bucket (elb-log-bucket-name elb-log)
-                              :credentials elb-log
-                              :prefix (when date (format-bucket-prefix date)))))
-    (%make-log-bucket :bucket bucket
+  (let* ((zs3:*credentials* elb-log)
+         (buckets (loop for bucket = (query-bucket (elb-log-bucket-name elb-log)
+                                                   :prefix (when date (format-bucket-prefix date)))
+                          then (continue-bucket-query bucket)
+                        collecting bucket
+                        while (truncatedp bucket))))
+    (%make-log-bucket :buckets buckets
                       :elb-log elb-log)))
 
 @doc
@@ -139,16 +144,17 @@ DATE should be an instance of loca-time:timestamp."
 
 @doc
 "Return a list of #S(log-key)."
-(defun log-keys (&optional (bucket *log-bucket*))
-  (loop for key across (keys (log-bucket-bucket bucket))
-        for log-key = (make-log-key key)
-        when log-key
-          collecting log-key))
+(defun log-keys (&optional (log-bucket *log-bucket*))
+  (loop for bucket in (log-bucket-buckets log-bucket)
+        nconc (loop for key across (keys bucket)
+                    for log-key = (make-log-key key)
+                    when log-key
+                      collecting log-key)))
 
 @doc
 "Return a list of #S(log-line)."
 (defun log-lines (log-key &key (bucket *log-bucket*))
-  (let ((stream (make-string-input-stream (get-string (bucket-name (log-bucket-bucket bucket))
+  (let ((stream (make-string-input-stream (get-string (bucket-name (car (log-bucket-buckets bucket)))
                                                       (log-key-key log-key)
                                                       :credentials (log-bucket-elb-log bucket)))))
     (loop for line = (read-line stream nil)
