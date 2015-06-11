@@ -15,6 +15,7 @@ dependencies:
         1) ros install ccl-bin;
            ros config set default.lisp ccl-bin ;;
       esac
+    - ros run -- --version
 
   cache_directories:
     - ~/.roswell
