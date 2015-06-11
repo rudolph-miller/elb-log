@@ -1,58 +1,49 @@
 @begin(section)
-@title(Overview)
-
-ELB log manager.
-
-@end(section)
-
+@title(ELB-LOG)
 @begin(section)
-@title(ELB Log)
-
+@title(Overview)
+ELB log manager for Common Lisp
+@end(section)
 @begin(section)
 @title(Globals)
-
-@cl:with-package[name="elb"](
+@cl:with-package[name="elb-log"](
 @cl:doc(variable *elb-log*)
 @cl:doc(variable *log-bucket*)
 @cl:doc(variable *log-date*)
 )
-
 @end(section)
-
 @begin(section)
 @title(Functions)
-
-@cl:with-package[name="elb"](
-@cl:doc(function make-elb-log)
-@cl:doc(function make-log-bucket)
+@cl:with-package[name="elb-log"](
 @cl:doc(function log-keys)
 @cl:doc(function log-lines)
+@cl:doc(function make-elb-log)
+@cl:doc(function make-log-bucket)
 )
-
 @end(section)
-
 @begin(section)
 @title(Macros)
-
-@cl:with-package[name="elb"](
+@cl:with-package[name="elb-log"](
 @cl:doc(macro with-elb-log)
 @cl:doc(macro with-specified-date-elb-log)
 @cl:doc(macro with-this-elb-log)
 )
-
 @end(section)
-
 @begin(section)
 @title(Structures)
-
-@cl:with-package[name="elb"](
+@cl:with-package[name="elb-log"](
 @cl:doc(struct elb-log)
 @cl:doc(struct log-bucket)
 @cl:doc(struct log-key)
 @cl:doc(struct log-line)
 )
-
 @end(section)
-
+@begin(section)
+@title(Author)
+Rudolph Miller
 @end(section)
-
+@begin(section)
+@title(Licence)
+LLGPL
+@end(section)
+@end(section)
