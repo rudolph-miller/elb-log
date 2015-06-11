@@ -1,8 +1,17 @@
 @begin(section)
-@title(ELB-LOG)
-@begin(section)
 @title(Overview)
+@begin(section)
+@title(Description)
 ELB log manager for Common Lisp
+@end(section)
+@begin(section)
+@title(Author)
+Rudolph Miller
+@end(section)
+@begin(section)
+@title(Licence)
+MIT
+@end(section)
 @end(section)
 @begin(section)
 @title(Globals)
@@ -37,13 +46,4 @@ ELB log manager for Common Lisp
 @cl:doc(struct log-key)
 @cl:doc(struct log-line)
 )
-@end(section)
-@begin(section)
-@title(Author)
-Rudolph Miller
-@end(section)
-@begin(section)
-@title(Licence)
-LLGPL
-@end(section)
 @end(section)

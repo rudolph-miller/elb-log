@@ -10,7 +10,7 @@
 
 (defsystem elb-log-test
   :author "Rudolph Miller"
-  :license "LLGPL"
+  :license "MIT"
   :depends-on (:elb-log
                :prove)
   :components ((:module "t"

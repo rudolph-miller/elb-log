@@ -17,7 +17,7 @@
 (defsystem elb-log
   :version "0.1"
   :author "Rudolph Miller"
-  :license "LLGPL"
+  :license "MIT"
   :depends-on (:cl-syntax
                :cl-syntax-interpol
                :cl-syntax-annot
