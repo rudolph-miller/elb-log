@@ -22,5 +22,4 @@ dependencies:
 test:
   override:
     - ros run -- --version
-    - ros -s prove
-          -e '(or (prove:run :elb-log-test) (uiop:quit -1))': {parallel: true}
+    - ros -s prove -e '(or (prove:run :elb-log-test) (uiop:quit -1))': {parallel: true}
