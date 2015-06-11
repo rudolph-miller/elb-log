@@ -109,13 +109,16 @@
 "Return #S(log-bucket).
 ELB-LOG should be #S(elb-log).
 DATE should be an instance of loca-time:timestamp."
-(defun make-log-bucket (&optional (elb-log *elb-log*) (date *log-date*))
+(defun make-log-bucket (&optional (elb-log *elb-log*) (date *log-date*) max-keys)
   (let* ((zs3:*credentials* elb-log)
          (buckets (loop for bucket = (query-bucket (elb-log-bucket-name elb-log)
-                                                   :prefix (when date (format-bucket-prefix date)))
+                                                   :prefix (when date (format-bucket-prefix date))
+                                                   :max-keys max-keys)
                           then (continue-bucket-query bucket)
                         collecting bucket
-                        while (truncatedp bucket))))
+                        while (and (or (null max-keys)
+                                       (> (decf max-keys (length (keys bucket))) 0))
+                                   (truncatedp bucket)))))
     (%make-log-bucket :buckets buckets
                       :elb-log elb-log)))
 
