@@ -18,6 +18,7 @@
   :version "0.1"
   :author "Rudolph Miller"
   :license "MIT"
+  :homepage "https://github.com/Rudolph-Miller/elb-log"
   :depends-on (:cl-syntax
                :cl-syntax-interpol
                :cl-syntax-annot
