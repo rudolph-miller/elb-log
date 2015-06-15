@@ -6,16 +6,17 @@ general:
 machine:
   environment:
     LISP: sbcl
+    PATH: ~/.roswell/bin:$PATH
 
 dependencies:
   pre:
-    - curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh;
-    - case $CIRCLE_NODE_INDEX in
-        0) ros config set default.lisp sbcl-bin ;;
-        1) ros install ccl-bin;
-           ros config set default.lisp ccl-bin ;;
-      esac
+    - curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh
     - ros run -- --version
+    - git clone https://github.com/CommonDoc/codex ~/lisp/codex
+    - git clone https://github.com/CommonDoc/common-doc ~/lisp/common-doc
+    - git clone https://github.com/CommonDoc/pandocl ~/lisp/pandocl
+    - git clone https://github.com/Rudolph-Miller/roswell-scripts ~/lisp/roswell-scripts
+    - cd ~/lisp/roswell-scripts/roswell && ros install gendoc && ros install gh-pages
 
   cache_directories:
     - ~/.roswell
@@ -23,4 +24,10 @@ dependencies:
 test:
   override:
     - ros run -- --version
-    - ros -s prove -e '(or (prove:run :elb-log-test) (uiop:quit -1))': {parallel: true}
+    - ros -s prove -e '(or (prove:run :elb-log-test) (uiop:quit -1))'
+
+deployment:
+  deployment:
+     branch: master
+     commands:
+       - gh-pages
