@@ -31,4 +31,6 @@ deployment:
   deployment:
      branch: master
      commands:
+       - git config --global user.name "Rudolph-Miller"
+       - git config --global user.email "chopsticks.tk.ppfm@gmail.com"
        - gh-pages
