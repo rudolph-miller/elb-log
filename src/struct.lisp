@@ -2,6 +2,7 @@
 (defpackage elb-log.struct
   (:use :cl
         :annot.doc
+        :annot.prove
         :elb-log.util)
   (:import-from :zs3
                 :key
@@ -62,6 +63,21 @@
 
 (syntax:use-syntax :cl-annot)
 
+@tests.around
+(let ((obj (make-elb-log (cons "ACCESS_KEY" "SECRET_KEY") "elb-log")))
+  (call-next-method))
+@tests
+((is-type obj
+          'elb-log
+          "can make-elb-log.")
+
+ (is (elb-log-credentials obj)
+     (cons "ACCESS_KEY" "SECRET_KEY")
+     "can set credentials.")
+
+ (is (elb-log-bucket-name obj)
+     "elb-log"
+     "can set bucket-name."))
 @doc
 "Struct of account information."
 (defstruct (elb-log (:constructor %make-elb-log))
@@ -112,6 +128,78 @@ BUCKET-NAME should be bucket name of ELB log."
                   :hash hash
                   :key key)))
 
+@tests.around
+(let ((obj (make-log-line elb-log.util::*sample-log*)))
+  (call-next-method))
+@tests
+((is-type obj
+          'log-line
+          "can make-log-line.")
+
+ (is (log-line-time obj)
+     (local-time:encode-timestamp 945958000 43 39 23 15 2 2014 :timezone local-time:+utc-zone+)
+     "can set time."
+     :test #'local-time:timestamp=)
+
+ (is (log-line-elb-name obj)
+     "my-loadbalancer"
+     "can set elb-name.")
+
+ (is (log-line-client obj)
+     "192.168.131.39"
+     "can set client.")
+
+ (is (log-line-client-port obj)
+     2817
+     "can set client-port.")
+
+ (is (log-line-backend obj)
+     "10.0.0.1"
+     "can set backend.")
+
+ (is (log-line-backend-port obj)
+     80
+     "can set backend-port.")
+
+ (is (log-line-request-processing-time obj)
+     0.000073
+     "can set request-processing-time.")
+
+ (is (log-line-backend-processing-time obj)
+     0.001048
+     "can set backend-processing-time.")
+
+ (is (log-line-response-processing-time obj)
+     0.000057
+     "can set response-processing-time.")
+
+ (is (log-line-elb-status-code obj)
+     200
+     "can set elb-status-code.")
+
+ (is (log-line-backend-status-code obj)
+     200
+     "can set backend-status-code.")
+
+ (is (log-line-received-bytes obj)
+     0
+     "can set received-bytes.")
+
+ (is (log-line-sent-bytes obj)
+     29
+     "can set sent-bytes.")
+
+ (is (log-line-request-method obj)
+     "GET"
+     "can set request-method.")
+
+ (is (log-line-request-uri obj)
+     "http://www.example.com:80/"
+     "can set request-uri.")
+
+ (is (log-line-request-protocol obj)
+     "HTTP/1.1"
+     "can set request-protocol."))
 @doc
 "Struct of ELB log line."
 (defstruct (log-line (:constructor %make-log-line))
@@ -140,18 +228,19 @@ BUCKET-NAME should be bucket name of ELB log."
                          request-method request-uri request-protocol)
       (*log-line-scanner* string)
     (%make-log-line :time time
-                   :elb-name elb-name
-                   :client client
-                   :client-port client-port
-                   :backend backend
-                   :backend-port backend-port
-                   :request-processing-time request-processing-time
-                   :backend-processing-time backend-processing-time
-                   :response-processing-time response-processing-time
-                   :elb-status-code elb-status-code
-                   :backend-status-code backend-status-code
-                   :received-bytes received-bytes
-                   :sent-bytes sent-bytes
-                   :request-method request-method
-                   :request-uri request-uri
-                   :request-protocol request-protocol)))
+                    :elb-name elb-name
+                    :client client
+                    :client-port client-port
+                    :backend backend
+                    :backend-port backend-port
+                    :request-processing-time request-processing-time
+                    :backend-processing-time backend-processing-time
+                    :response-processing-time response-processing-time
+                    :elb-status-code elb-status-code
+                    :backend-status-code backend-status-code
+                    :received-bytes received-bytes
+                    :sent-bytes sent-bytes
+                    :request-method request-method
+                    :request-uri request-uri
+                    :request-protocol request-protocol)))
+

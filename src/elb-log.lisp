@@ -2,6 +2,7 @@
 (defpackage elb-log
   (:use :cl
         :annot.doc
+        :annot.prove
         :elb-log.util
         :elb-log.struct)
   (:import-from :zs3
@@ -13,6 +14,9 @@
                 :truncatedp
                 :get-string)
   (:import-from :local-time
+                :+utc-zone+
+                :encode-timestamp
+                :timestamp=
                 :today)
   (:export ;; globals
            :*elb-log*
@@ -77,6 +81,12 @@
 
 (syntax:use-syntax :cl-annot)
 
+(defmacro with-stub-make-log-bucket (&body body)
+  `(with-stubs ((make-log-bucket . #'(lambda (&optional (elb-log *elb-log*))
+                                       (%make-log-bucket :buckets nil
+                                                         :elb-log elb-log))))
+     ,@body))
+
 @doc
 "Default value of #S(elb-log)."
 (defvar *elb-log* nil)
@@ -99,6 +109,16 @@
                (return-from set-accout-id-and-region t)
           finally (error "Could not set-accout-id and region."))))
 
+@tests.around
+(let ((date (encode-timestamp 0 0 0 0 31 12 2014 :timezone +utc-zone+))
+      (elb-log (make-elb-log (cons "ACCESS_KEY" "SECRET_KEY") "elb-log")))
+  (setf (elb-log-account-id elb-log) "ACCOUNT_ID")
+  (setf (elb-log-region elb-log) "ap-northeast-1")
+  (call-next-method))
+@tests
+((is (format-bucket-prefix date elb-log)
+        "AWSLogs/ACCOUNT_ID/elasticloadbalancing/ap-northeast-1/2014/12/31"
+        "can format bucket prefix with the date."))
 (defun format-bucket-prefix (date &optional (elb-log *elb-log*))
   (unless (and (elb-log-account-id elb-log)
                (elb-log-region elb-log))
@@ -125,6 +145,22 @@ DATE should be an instance of loca-time:timestamp."
     (%make-log-bucket :buckets buckets
                       :elb-log elb-log)))
 
+@tests.around
+(with-stub-make-log-bucket
+  (let ((*default-test-function* #'equalp)
+        (credentials (cons "ACCESS_KEY" "SECRET_KEY"))
+        (bucket-name "elb-log"))
+    (with-elb-log (credentials bucket-name)
+      (call-next-method))))
+@tests
+((is *elb-log*
+     (make-elb-log credentials bucket-name)
+     "can bind *elb-log*.")
+
+ (is *log-bucket*
+     (%make-log-bucket :buckets nil
+                       :elb-log *elb-log*)
+     "can bind *log-bucket*."))
 @doc
 "Bind *elb-log* to #S(elb-log credentials bucket-name),
 *log-bucket* to #S(log-bucket bucket *elb-log*)."
@@ -133,6 +169,27 @@ DATE should be an instance of loca-time:timestamp."
           (*log-bucket* (make-log-bucket)))
      ,@body))
 
+@tests.around
+(with-stub-make-log-bucket
+  (let ((*default-test-function* #'equalp)
+        (date (encode-timestamp 0 0 0 0 31 12 2014))
+        (credentials (cons "ACCESS_KEY" "SECRET_KEY"))
+        (bucket-name "elb-log"))
+    (with-specified-date-elb-log date (credentials bucket-name)
+      (call-next-method))))
+@tests
+((is *log-date*
+     date
+     "can bind *log-date*.")
+
+ (is *elb-log*
+     (make-elb-log credentials bucket-name)
+     "can bind *elb-log*.")
+
+ (is *log-bucket*
+     (%make-log-bucket :buckets nil
+                       :elb-log *elb-log*)
+     "can bind *log-bucket*."))
 @doc
 "Bind *elb-log* to #S(elb-log credentials bucket-name),
 *log-bucket* to #S(log-bucket bucket *elb-log*),
@@ -141,6 +198,27 @@ DATE should be an instance of loca-time:timestamp."
   `(let ((*log-date* ,date))
      (with-elb-log (,credentials ,bucket-name) ,@body)))
 
+@tests.around
+(with-stub-make-log-bucket
+  (let ((*default-test-function* #'equalp)
+        (credentials (cons "ACCESS_KEY" "SECRET_KEY"))
+        (bucket-name "elb-log"))
+    (with-this-elb-log (credentials bucket-name)
+      (call-next-method))))
+@tests
+((is *log-date*
+     (today)
+     "can bind *log-date*."
+     :test #'timestamp=)
+
+ (is *elb-log*
+     (make-elb-log credentials bucket-name)
+     "can bind *elb-log*.")
+
+ (is *log-bucket*
+     (%make-log-bucket :buckets nil
+                       :elb-log *elb-log*)
+     "can bind *log-bucket*."))
 @doc
 "Bind *elb-log* to #S(elb-log credentials bucket-name),
 *log-bucket* to #S(log-bucket bucket *elb-log*),
