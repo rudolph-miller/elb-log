@@ -65,7 +65,7 @@
 
 @tests.around
 (let ((obj (make-elb-log (cons "ACCESS_KEY" "SECRET_KEY") "elb-log")))
-  (call-next-method))
+  (call-tests))
 @tests
 ((is-type obj
           'elb-log
@@ -130,7 +130,7 @@ BUCKET-NAME should be bucket name of ELB log."
 
 @tests.around
 (let ((obj (make-log-line elb-log.util::*sample-log*)))
-  (call-next-method))
+  (call-tests))
 @tests
 ((is-type obj
           'log-line

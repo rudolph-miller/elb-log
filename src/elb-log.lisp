@@ -114,7 +114,7 @@
       (elb-log (make-elb-log (cons "ACCESS_KEY" "SECRET_KEY") "elb-log")))
   (setf (elb-log-account-id elb-log) "ACCOUNT_ID")
   (setf (elb-log-region elb-log) "ap-northeast-1")
-  (call-next-method))
+  (call-tests))
 @tests
 ((is (format-bucket-prefix date elb-log)
         "AWSLogs/ACCOUNT_ID/elasticloadbalancing/ap-northeast-1/2014/12/31"
@@ -151,7 +151,7 @@ DATE should be an instance of loca-time:timestamp."
         (credentials (cons "ACCESS_KEY" "SECRET_KEY"))
         (bucket-name "elb-log"))
     (with-elb-log (credentials bucket-name)
-      (call-next-method))))
+      (call-tests))))
 @tests
 ((is *elb-log*
      (make-elb-log credentials bucket-name)
@@ -176,7 +176,7 @@ DATE should be an instance of loca-time:timestamp."
         (credentials (cons "ACCESS_KEY" "SECRET_KEY"))
         (bucket-name "elb-log"))
     (with-specified-date-elb-log date (credentials bucket-name)
-      (call-next-method))))
+      (call-tests))))
 @tests
 ((is *log-date*
      date
@@ -204,7 +204,7 @@ DATE should be an instance of loca-time:timestamp."
         (credentials (cons "ACCESS_KEY" "SECRET_KEY"))
         (bucket-name "elb-log"))
     (with-this-elb-log (credentials bucket-name)
-      (call-next-method))))
+      (call-tests))))
 @tests
 ((is *log-date*
      (today)
