@@ -3,8 +3,7 @@
   (:use :cl
         :annot.doc
         :annot.prove
-        :elb-log.util
-        :elb-log.struct)
+        :elb-log.util)
   (:import-from :zs3
                 :bucket-name
                 :name
@@ -18,6 +17,48 @@
                 :encode-timestamp
                 :timestamp=
                 :today)
+  (:import-from :elb-log.struct
+                :elb-log
+                :elb-log-credentials
+                :elb-log-bucket-name
+                :elb-log-account-id
+                :elb-log-region
+                :make-elb-log
+
+                :log-bucket
+                :log-bucket-buckets
+                :log-bucket-elb-log
+                :%make-log-bucket
+
+                :log-key
+                :log-key-account-id
+                :log-key-region
+                :log-key-date
+                :log-key-elb-name
+                :log-key-timestamp
+                :log-key-elb-ip
+                :log-key-hash
+                :log-key-key
+                :make-log-key
+
+                :log-line
+                :log-line-time
+                :log-line-elb-name
+                :log-line-client
+                :log-line-client-port
+                :log-line-backend
+                :log-line-backend-port
+                :log-line-request-processing-time
+                :log-line-backend-processing-time
+                :log-line-request-processing-time
+                :log-line-elb-status-code
+                :log-line-backend-status-code
+                :log-line-received-bytes
+                :log-line-sent-bytes
+                :log-line-request-method
+                :log-line-request-uri
+                :log-line-request-protocol
+                :make-log-line)
   (:export ;; globals
            :*elb-log*
            :*log-bucket*
@@ -29,7 +70,7 @@
            :elb-log
            :elb-log-credentials
            :elb-log-bucket-name
-           :elb-log-accout-id
+           :elb-log-account-id
            :elb-log-region
            :make-elb-log
 
