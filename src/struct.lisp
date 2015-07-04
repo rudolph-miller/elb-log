@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage elb-log.struct
   (:use :cl
+        :annot.class
         :annot.doc
         :annot.prove
         :elb-log.util)
@@ -13,56 +14,12 @@
                 :register-groups-bind)
   (:import-from :local-time
                 :timestamp
-                :parse-timestring)
-  (:export ;; elb-log
-           :elb-log
-           :elb-log-credentials
-           :elb-log-bucket-name
-           :elb-log-account-id
-           :elb-log-region
-           :make-elb-log
-
-           ;; log-bucket
-           :log-bucket
-           :log-bucket-buckets
-           :log-bucket-elb-log
-           :%make-log-bucket
-
-           ;; log-key
-           :log-key
-           :log-key-account-id
-           :log-key-region
-           :log-key-date
-           :log-key-elb-name
-           :log-key-timestamp
-           :log-key-elb-ip
-           :log-key-hash
-           :log-key-key
-           :make-log-key
-
-           ;; log-line
-           :log-line
-           :log-line-time
-           :log-line-elb-name
-           :log-line-client
-           :log-line-client-port
-           :log-line-backend
-           :log-line-backend-port
-           :log-line-request-processing-time
-           :log-line-backend-processing-time
-           :log-line-response-processing-time
-           :log-line-elb-status-code
-           :log-line-backend-status-code
-           :log-line-received-bytes
-           :log-line-sent-bytes
-           :log-line-request-method
-           :log-line-request-uri
-           :log-line-request-protocol
-           :make-log-line))
+                :parse-timestring))
 (in-package :elb-log.struct)
 
 (syntax:use-syntax :cl-annot)
 
+@export-structure
 @tests.around
 (let ((obj (make-elb-log (cons "ACCESS_KEY" "SECRET_KEY") "elb-log")))
   (call-tests))
@@ -86,6 +43,7 @@
   (account-id nil :type (or null string))
   (region nil :type (or null string)))
 
+@export
 @doc
 "Return #S(elb-log credentials bucket-name).
 CREDENTIALS should be (cons \"AWS_ACCESS_KEY\" \"AWS_SECRET_KEY\").
@@ -99,12 +57,14 @@ BUCKET-NAME should be bucket name of ELB log."
 (defmethod secret-key ((obj elb-log))
   (cdr (elb-log-credentials obj)))
 
+@export-structure
 @doc
 "Struct of ELB log bucket."
 (defstruct (log-bucket (:constructor %make-log-bucket))
   (buckets nil :type list)
   (elb-log nil :type (or null elb-log)))
 
+@export-structure
 @doc
 "Struct of ELB log object key."
 (defstruct (log-key (:constructor %make-log-key))
@@ -117,6 +77,7 @@ BUCKET-NAME should be bucket name of ELB log."
   (hash nil :type (or null string))
   (key nil :type (or null key)))
 
+@export
 (defun make-log-key (key)
   (register-groups-bind (account-id region date elb-name timestamp elb-ip hash) (*key-scanner* (name key))
     (%make-log-key :account-id account-id
@@ -128,6 +89,7 @@ BUCKET-NAME should be bucket name of ELB log."
                   :hash hash
                   :key key)))
 
+@export-structure
 @tests.around
 (let ((obj (make-log-line elb-log.util::*sample-log*)))
   (call-tests))
@@ -220,6 +182,7 @@ BUCKET-NAME should be bucket name of ELB log."
   (request-uri nil :type (or null string))
   (request-protocol nil :type (or null string)))
 
+@export
 (defun make-log-line (string)
   (register-groups-bind ((#'parse-timestring time) elb-name client (#'parse-integer client-port) backend
                          (#'parse-integer backend-port)
