@@ -8,6 +8,7 @@ machine:
     LISP: sbcl
     PATH: ~/.roswell/bin:$PATH
     COVERALLS: true
+    COVERAGE_EXCLUDE: t
 
 dependencies:
   pre:
@@ -19,6 +20,7 @@ dependencies:
     - git clone https://github.com/CommonDoc/parenml ~/lisp/parenml
     - git clone https://github.com/Rudolph-Miller/roswell-scripts ~/lisp/roswell-scripts
     - git clone https://github.com/Rudolph-Miller/cl-annot-prove ~/lisp/cl-annot-prove
+    - ros -s ~/lisp/cl-annot-prove install cl-annot-prove
 
     - git clone -b issue/5 https://github.com/Rudolph-Miller/docparser ~/lisp/docparser
 
@@ -30,7 +32,7 @@ dependencies:
 test:
   override:
     - ros run -- --version
-    - ros -s cl-coveralls -s cl-annot-prove -e "(or (cl-coveralls:with-coveralls (:exclude '(\"t\")) (annot.prove:run-system-tests :elb-log)) (uiop:quit -1))"
+    - run-annot-prove elb-log.asd
 
 deployment:
   deployment:
