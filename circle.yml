@@ -30,7 +30,7 @@ dependencies:
 test:
   override:
     - ros run -- --version
-    - ros -s cl-coveralls -s cl-annot-prove -e "(or (cl-coveralls:with-coveralls (:exclude '(t)) (annot.prove:run-system-tests :elb-log)) (uiop:quit -1))"
+    - ros -s cl-coveralls -s cl-annot-prove -e "(or (cl-coveralls:with-coveralls (:exclude '(\"t\")) (annot.prove:run-system-tests :elb-log)) (uiop:quit -1))"
 
 deployment:
   deployment:
