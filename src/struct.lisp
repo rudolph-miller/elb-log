@@ -206,4 +206,3 @@ BUCKET-NAME should be bucket name of ELB log."
                     :request-method request-method
                     :request-uri request-uri
                     :request-protocol request-protocol)))
-
