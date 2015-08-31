@@ -1,4 +1,4 @@
-# Elb Log - ELB log manager for Common Lisp
+# Elb Log - Elastic Load Balancing log manager for Common Lisp
 [![Build Status](https://circleci.com/gh/Rudolph-Miller/elb-log.svg?style=shield)](https://circleci.com/gh/Rudolph-Miller/elb-log)
 
 ## Usage
