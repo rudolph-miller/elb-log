@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Structures &ndash; ELB-LOG
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="structures"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="structures"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="structures"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">ELB-LOG » Structures</h1>
+  <article id="article" data-section="structures">
+    <aside>
+      <ol class="toc"><li><a href="overview.html" data-node="overview">Overview</a><ol><li><a href="overview.html#description" data-node="description">Description</a></li><li><a href="overview.html#examples" data-node="examples">Examples</a><ol><li><a href="overview.html#with-elb-log" data-node="with-elb-log">with-elb-log</a></li></ol></li><li><a href="overview.html#source" data-node="source">Source</a></li><li><a href="overview.html#author" data-node="author">Author</a></li><li><a href="overview.html#licence" data-node="licence">Licence</a></li></ol></li><li><a href="globals.html" data-node="globals">Globals</a></li><li><a href="functions.html" data-node="functions">Functions</a></li><li><a href="macros.html" data-node="macros">Macros</a></li><li><a href="structures.html" data-node="structures">Structures</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      <div class="codex-doc-node codex-record codex-structure"><code class="codex-name">elb-log</code><div class="codex-docstring">Struct of account information.</div><ul class="codex-slot-list"><li class="codex-slot codex-structure-slot"><code class="codex-name">credentials</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">bucket-name</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">account-id</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">region</code></li></ul></div><pre><code class="lisp">;; Usage of ELB-LOG
+(LET ((OBJ (MAKE-ELB-LOG (CONS &quot;ACCESS_KEY&quot; &quot;SECRET_KEY&quot;) &quot;elb-log&quot;)))
+  OBJ
+;; =&gt; TYPE: ELB-LOG
+  (ELB-LOG-CREDENTIALS OBJ)
+;; =&gt; (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)(ELB-LOG-BUCKET-NAME OBJ)
+;; =&gt; &quot;elb-log&quot;)</code></pre><div class="codex-doc-node codex-record codex-structure"><code class="codex-name">log-bucket</code><div class="codex-docstring">Struct of ELB log bucket.</div><ul class="codex-slot-list"><li class="codex-slot codex-structure-slot"><code class="codex-name">buckets</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">elb-log</code></li></ul></div><div class="codex-doc-node codex-record codex-structure"><code class="codex-name">log-key</code><div class="codex-docstring">Struct of ELB log object key.</div><ul class="codex-slot-list"><li class="codex-slot codex-structure-slot"><code class="codex-name">account-id</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">region</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">date</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">elb-name</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">timestamp</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">elb-ip</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">hash</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">key</code></li></ul></div><div class="codex-doc-node codex-record codex-structure"><code class="codex-name">log-line</code><div class="codex-docstring">Struct of ELB log line.</div><ul class="codex-slot-list"><li class="codex-slot codex-structure-slot"><code class="codex-name">time</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">elb-name</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">client</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">client-port</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">backend</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">backend-port</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">request-processing-time</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">backend-processing-time</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">response-processing-time</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">elb-status-code</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">backend-status-code</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">received-bytes</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">sent-bytes</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">request-method</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">request-uri</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">request-protocol</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">user-agent</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">ssl-cipher</code></li><li class="codex-slot codex-structure-slot"><code class="codex-name">ssl-protocol</code></li></ul></div><pre><code class="lisp">;; Usage of LOG-LINE
+(LET ((OBJ (MAKE-LOG-LINE *SAMPLE-LOG*)))
+  OBJ
+;; =&gt; TYPE: LOG-LINE
+  (LOG-LINE-TIME OBJ)
+;; =&gt; @2014-02-15T23:39:43.945958Z
+  (LOG-LINE-ELB-NAME OBJ)
+;; =&gt; &quot;my-loadbalancer&quot;
+  (LOG-LINE-CLIENT OBJ)
+;; =&gt; &quot;192.168.131.39&quot;
+  (LOG-LINE-CLIENT-PORT OBJ)
+;; =&gt; 2817
+  (LOG-LINE-BACKEND OBJ)
+;; =&gt; &quot;10.0.0.1&quot;
+  (LOG-LINE-BACKEND-PORT OBJ)
+;; =&gt; 80
+  (LOG-LINE-REQUEST-PROCESSING-TIME OBJ)
+;; =&gt; 7.3e-5
+  (LOG-LINE-BACKEND-PROCESSING-TIME OBJ)
+;; =&gt; 0.001048
+  (LOG-LINE-RESPONSE-PROCESSING-TIME OBJ)
+;; =&gt; 5.7e-5
+  (LOG-LINE-ELB-STATUS-CODE OBJ)
+;; =&gt; 200
+  (LOG-LINE-BACKEND-STATUS-CODE OBJ)
+;; =&gt; 200
+  (LOG-LINE-RECEIVED-BYTES OBJ)
+;; =&gt; 0
+  (LOG-LINE-SENT-BYTES OBJ)
+;; =&gt; 29
+  (LOG-LINE-REQUEST-METHOD OBJ)
+;; =&gt; &quot;GET&quot;
+  (LOG-LINE-REQUEST-URI OBJ)
+;; =&gt; &quot;http://www.example.com:80/&quot;
+  (LOG-LINE-REQUEST-PROTOCOL OBJ)
+;; =&gt; &quot;HTTP/1.1&quot;
+  (LOG-LINE-USER-AGENT OBJ)
+;; =&gt; &quot;curl/7.38.0&quot;
+  (LOG-LINE-SSL-CIPHER OBJ)
+;; =&gt; &quot;-&quot;
+  (LOG-LINE-SSL-PROTOCOL OBJ)
+;; =&gt; &quot;-&quot;)</code></pre>
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>

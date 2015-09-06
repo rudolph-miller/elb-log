@@ -1,0 +1,254 @@
+@begin(section)
+@title(Overview)
+@link[uri=https://circleci.com/gh/Rudolph-Miller/elb-log](@image[src="https://circleci.com/gh/Rudolph-Miller/elb-log.svg"]())
+
+@link[uri=https://coveralls.io/repos/Rudolph-Miller/elb-log](@image[src="https://coveralls.io/repos/Rudolph-Miller/elb-log/badge.svg"]())
+@begin(section)
+@title(Description)
+ELB log manager for Common Lisp
+@end(section)
+@begin(section)
+@title(Examples)
+@begin(section)
+@title(with-elb-log)
+@code[lang=lisp](@include[path=../examples/with-elb-log.lisp]())
+@end(section)
+@end(section)
+@begin(section)
+@title(Source)
+@link[uri=https://github.com/Rudolph-Miller/elb-log](ELB-LOG)
+@end(section)
+@begin(section)
+@title(Author)
+@b(Rudolph Miller)
+@end(section)
+@begin(section)
+@title(Licence)
+MIT
+@end(section)
+@end(section)
+; compiling file "/home/ubuntu/elb-log/src/util.lisp" (written 06 SEP 2015 07:53:04 AM):
+; compiling (IN-PACKAGE :CL-USER)
+; compiling (DEFPACKAGE ELB-LOG.UTIL ...)
+; compiling (IN-PACKAGE :ELB-LOG.UTIL)
+; compiling (CL-SYNTAX:USE-SYNTAX :CL-INTERPOL)
+; compiling (CL-SYNTAX:USE-SYNTAX :ANNOT)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (DEFVAR *TIMESTAMP-SCANNER* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+
+; /home/ubuntu/.cache/common-lisp/sbcl-1.2.14-linux-x64/sbcl-bin-1.2.14/home/ubuntu/elb-log/src/util-TMP.fasl written
+; compilation finished in 0:00:00.050
+; compiling file "/home/ubuntu/elb-log/src/struct.lisp" (written 06 SEP 2015 07:53:04 AM):
+; compiling (IN-PACKAGE :CL-USER)
+; compiling (DEFPACKAGE ELB-LOG.STRUCT ...)
+; compiling (IN-PACKAGE :ELB-LOG.STRUCT)
+; compiling (CL-SYNTAX:USE-SYNTAX :CL-ANNOT)
+; compiling (CL-ANNOT.CORE:%ANNOTATION EXPORT-STRUCTURE ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (DEFMETHOD ACCESS-KEY ...)
+; compiling (DEFMETHOD SECRET-KEY ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION EXPORT-STRUCTURE ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION EXPORT-STRUCTURE ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION EXPORT-STRUCTURE ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION CL-ANNOT.STD:EXPORT* ...)
+
+; /home/ubuntu/.cache/common-lisp/sbcl-1.2.14-linux-x64/sbcl-bin-1.2.14/home/ubuntu/elb-log/src/struct-TMP.fasl written
+; compilation finished in 0:00:00.175
+; compiling file "/home/ubuntu/elb-log/src/elb-log.lisp" (written 06 SEP 2015 07:53:04 AM):
+; compiling (IN-PACKAGE :CL-USER)
+; compiling (DEFPACKAGE ELB-LOG ...)
+; compiling (IN-PACKAGE :ELB-LOG)
+; compiling (CL-SYNTAX:USE-SYNTAX :CL-ANNOT)
+; compiling (DEFMACRO WITH-STUB-MAKE-LOG-BUCKET ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION DOC ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION DOC ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION DOC ...)
+; compiling (DEFUN SET-ACCOUT-ID-AND-REGION ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION TESTS.AROUND ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION DOC ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION TESTS.AROUND ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION TESTS.AROUND ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION TESTS.AROUND ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION DOC ...)
+; compiling (CL-ANNOT.CORE:%ANNOTATION DOC ...)
+
+; /home/ubuntu/.cache/common-lisp/sbcl-1.2.14-linux-x64/sbcl-bin-1.2.14/home/ubuntu/elb-log/src/elb-log-TMP.fasl written
+; compilation finished in 0:00:00.183
+@begin(section)
+@title(Globals)
+@cl:with-package[name="elb-log"](
+@cl:doc(variable *elb-log*)
+)
+@cl:with-package[name="elb-log"](
+@cl:doc(variable *log-bucket*)
+)
+@cl:with-package[name="elb-log"](
+@cl:doc(variable *log-date*)
+)
+@end(section)
+@begin(section)
+@title(Functions)
+@cl:with-package[name="elb-log"](
+@cl:doc(function log-keys)
+)
+@cl:with-package[name="elb-log"](
+@cl:doc(function log-lines)
+)
+@cl:with-package[name="elb-log.struct"](
+@cl:doc(function make-elb-log)
+)
+@cl:with-package[name="elb-log"](
+@cl:doc(function make-log-bucket)
+)
+@end(section)
+@begin(section)
+@title(Macros)
+@cl:with-package[name="elb-log"](
+@cl:doc(macro with-elb-log)
+@code[lang=lisp](;; Usage of WITH-ELB-LOG
+(WITH-STUB-MAKE-LOG-BUCKET
+  (LET ((*DEFAULT-TEST-FUNCTION* #'EQUALP)
+        (CREDENTIALS (CONS "ACCESS_KEY" "SECRET_KEY"))
+        (BUCKET-NAME "elb-log"))
+    (WITH-ELB-LOG (CREDENTIALS BUCKET-NAME)
+      *ELB-LOG*
+;; => #S(ELB-LOG.STRUCT:ELB-LOG
+;;       :CREDENTIALS ("ACCESS_KEY" . "SECRET_KEY")
+;;       :BUCKET-NAME "elb-log"
+;;       :ACCOUNT-ID NIL
+;;       :REGION NIL)
+      *LOG-BUCKET*
+;; => #S(ELB-LOG.STRUCT:LOG-BUCKET
+;;       :BUCKETS NIL
+;;       :ELB-LOG #S(ELB-LOG.STRUCT:ELB-LOG
+;;                   :CREDENTIALS ("ACCESS_KEY" . "SECRET_KEY")
+;;                   :BUCKET-NAME "elb-log"
+;;                   :ACCOUNT-ID NIL
+;;                   :REGION NIL))))))
+)
+@cl:with-package[name="elb-log"](
+@cl:doc(macro with-specified-date-elb-log)
+@code[lang=lisp](;; Usage of WITH-SPECIFIED-DATE-ELB-LOG
+(WITH-STUB-MAKE-LOG-BUCKET
+  (LET ((*DEFAULT-TEST-FUNCTION* #'EQUALP)
+        (DATE (ENCODE-TIMESTAMP 0 0 0 0 31 12 2014))
+        (CREDENTIALS (CONS "ACCESS_KEY" "SECRET_KEY"))
+        (BUCKET-NAME "elb-log"))
+    (WITH-SPECIFIED-DATE-ELB-LOG DATE
+        (CREDENTIALS BUCKET-NAME)
+      *LOG-DATE*
+;; => @2014-12-31T00:00:00.000000Z
+      *ELB-LOG*
+;; => #S(ELB-LOG.STRUCT:ELB-LOG
+;;       :CREDENTIALS ("ACCESS_KEY" . "SECRET_KEY")
+;;       :BUCKET-NAME "elb-log"
+;;       :ACCOUNT-ID NIL
+;;       :REGION NIL)
+      *LOG-BUCKET*
+;; => #S(ELB-LOG.STRUCT:LOG-BUCKET
+;;       :BUCKETS NIL
+;;       :ELB-LOG #S(ELB-LOG.STRUCT:ELB-LOG
+;;                   :CREDENTIALS ("ACCESS_KEY" . "SECRET_KEY")
+;;                   :BUCKET-NAME "elb-log"
+;;                   :ACCOUNT-ID NIL
+;;                   :REGION NIL))))))
+)
+@cl:with-package[name="elb-log"](
+@cl:doc(macro with-this-elb-log)
+@code[lang=lisp](;; Usage of WITH-THIS-ELB-LOG
+(WITH-STUB-MAKE-LOG-BUCKET
+  (LET ((*DEFAULT-TEST-FUNCTION* #'EQUALP)
+        (CREDENTIALS (CONS "ACCESS_KEY" "SECRET_KEY"))
+        (BUCKET-NAME "elb-log"))
+    (WITH-THIS-ELB-LOG (CREDENTIALS BUCKET-NAME)
+      *LOG-DATE*
+;; => @2015-09-06T00:00:00.000000Z
+      *ELB-LOG*
+;; => #S(ELB-LOG.STRUCT:ELB-LOG
+;;       :CREDENTIALS ("ACCESS_KEY" . "SECRET_KEY")
+;;       :BUCKET-NAME "elb-log"
+;;       :ACCOUNT-ID NIL
+;;       :REGION NIL)
+      *LOG-BUCKET*
+;; => #S(ELB-LOG.STRUCT:LOG-BUCKET
+;;       :BUCKETS NIL
+;;       :ELB-LOG #S(ELB-LOG.STRUCT:ELB-LOG
+;;                   :CREDENTIALS ("ACCESS_KEY" . "SECRET_KEY")
+;;                   :BUCKET-NAME "elb-log"
+;;                   :ACCOUNT-ID NIL
+;;                   :REGION NIL))))))
+)
+@end(section)
+@begin(section)
+@title(Structures)
+@cl:with-package[name="elb-log.struct"](
+@cl:doc(struct elb-log)
+@code[lang=lisp](;; Usage of ELB-LOG
+(LET ((OBJ (MAKE-ELB-LOG (CONS "ACCESS_KEY" "SECRET_KEY") "elb-log")))
+  OBJ
+;; => TYPE: ELB-LOG
+  (ELB-LOG-CREDENTIALS OBJ)
+;; => ("ACCESS_KEY" . "SECRET_KEY")
+  (ELB-LOG-BUCKET-NAME OBJ)
+;; => "elb-log"))
+)
+@cl:with-package[name="elb-log.struct"](
+@cl:doc(struct log-bucket)
+)
+@cl:with-package[name="elb-log.struct"](
+@cl:doc(struct log-key)
+)
+@cl:with-package[name="elb-log.struct"](
+@cl:doc(struct log-line)
+@code[lang=lisp](;; Usage of LOG-LINE
+(LET ((OBJ (MAKE-LOG-LINE *SAMPLE-LOG*)))
+  OBJ
+;; => TYPE: LOG-LINE
+  (LOG-LINE-TIME OBJ)
+;; => @2014-02-15T23:39:43.945958Z
+  (LOG-LINE-ELB-NAME OBJ)
+;; => "my-loadbalancer"
+  (LOG-LINE-CLIENT OBJ)
+;; => "192.168.131.39"
+  (LOG-LINE-CLIENT-PORT OBJ)
+;; => 2817
+  (LOG-LINE-BACKEND OBJ)
+;; => "10.0.0.1"
+  (LOG-LINE-BACKEND-PORT OBJ)
+;; => 80
+  (LOG-LINE-REQUEST-PROCESSING-TIME OBJ)
+;; => 7.3e-5
+  (LOG-LINE-BACKEND-PROCESSING-TIME OBJ)
+;; => 0.001048
+  (LOG-LINE-RESPONSE-PROCESSING-TIME OBJ)
+;; => 5.7e-5
+  (LOG-LINE-ELB-STATUS-CODE OBJ)
+;; => 200
+  (LOG-LINE-BACKEND-STATUS-CODE OBJ)
+;; => 200
+  (LOG-LINE-RECEIVED-BYTES OBJ)
+;; => 0
+  (LOG-LINE-SENT-BYTES OBJ)
+;; => 29
+  (LOG-LINE-REQUEST-METHOD OBJ)
+;; => "GET"
+  (LOG-LINE-REQUEST-URI OBJ)
+;; => "http://www.example.com:80/"
+  (LOG-LINE-REQUEST-PROTOCOL OBJ)
+;; => "HTTP/1.1"
+  (LOG-LINE-USER-AGENT OBJ)
+;; => "curl/7.38.0"
+  (LOG-LINE-SSL-CIPHER OBJ)
+;; => "-"
+  (LOG-LINE-SSL-PROTOCOL OBJ)
+;; => "-"))
+)
+@end(section)

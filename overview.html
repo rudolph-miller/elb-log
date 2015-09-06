@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Overview &ndash; ELB-LOG
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="overview"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="overview"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="overview"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">ELB-LOG » Overview</h1>
+  <article id="article" data-section="overview">
+    <aside>
+      <ol class="toc"><li><a href="overview.html" data-node="overview">Overview</a><ol><li><a href="overview.html#description" data-node="description">Description</a></li><li><a href="overview.html#examples" data-node="examples">Examples</a><ol><li><a href="overview.html#with-elb-log" data-node="with-elb-log">with-elb-log</a></li></ol></li><li><a href="overview.html#source" data-node="source">Source</a></li><li><a href="overview.html#author" data-node="author">Author</a></li><li><a href="overview.html#licence" data-node="licence">Licence</a></li></ol></li><li><a href="globals.html" data-node="globals">Globals</a></li><li><a href="functions.html" data-node="functions">Functions</a></li><li><a href="macros.html" data-node="macros">Macros</a></li><li><a href="structures.html" data-node="structures">Structures</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      <a href="https://circleci.com/gh/Rudolph-Miller/elb-log"><img src="https://circleci.com/gh/Rudolph-Miller/elb-log.svg"/></a><a href="https://coveralls.io/repos/Rudolph-Miller/elb-log"><img src="https://coveralls.io/repos/Rudolph-Miller/elb-log/badge.svg"/></a><h1 id="description">Description</h1>
+ELB log manager for Common Lisp
+<h1 id="examples">Examples</h1><h2 id="with-elb-log">with-elb-log</h2><pre><code class="lisp">(with-elb-log  ((cons (asdf::getenv &quot;AWS_ACCESS_KEY&quot;) (asdf::getenv &quot;AWS_SECRET_KEY&quot;)) &quot;elb-log&quot;)
+  (dolist (key (log-keys))
+    (do-something (log-lines key))))
+
+;;; Same as above
+
+(let* ((elb-log (make-elb-log (cons (asdf::getenv &quot;AWS_ACCESS_KEY&quot;) (asdf::getenv &quot;AWS_SECRET_KEY&quot;)) &quot;elb-log&quot;))
+       (log-bucket (make-log-bucket elb-log)))
+  (dolist (key (log-keys log-bucket))
+    (do-something (log-lines key))))
+</code></pre><h1 id="source">Source</h1><a href="https://github.com/Rudolph-Miller/elb-log">ELB-LOG</a><h1 id="author">Author</h1><b>Rudolph Miller</b><h1 id="licence">Licence</h1>
+MIT
+
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>

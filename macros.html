@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Macros &ndash; ELB-LOG
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="macros"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="macros"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="macros"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">ELB-LOG » Macros</h1>
+  <article id="article" data-section="macros">
+    <aside>
+      <ol class="toc"><li><a href="overview.html" data-node="overview">Overview</a><ol><li><a href="overview.html#description" data-node="description">Description</a></li><li><a href="overview.html#examples" data-node="examples">Examples</a><ol><li><a href="overview.html#with-elb-log" data-node="with-elb-log">with-elb-log</a></li></ol></li><li><a href="overview.html#source" data-node="source">Source</a></li><li><a href="overview.html#author" data-node="author">Author</a></li><li><a href="overview.html#licence" data-node="licence">Licence</a></li></ol></li><li><a href="globals.html" data-node="globals">Globals</a></li><li><a href="functions.html" data-node="functions">Functions</a></li><li><a href="macros.html" data-node="macros">Macros</a></li><li><a href="structures.html" data-node="structures">Structures</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      <div class="codex-doc-node codex-operator codex-macro"><code class="codex-name">with-elb-log</code><code class="codex-lambda-list">((credentials bucket-name) &amp;body body)</code><div class="codex-docstring">Bind *elb-log* to #S(elb-log credentials bucket-name),
+*log-bucket* to #S(log-bucket bucket *elb-log*).</div></div><pre><code class="lisp">;; Usage of WITH-ELB-LOG
+(WITH-STUB-MAKE-LOG-BUCKET
+  (LET ((*DEFAULT-TEST-FUNCTION* #'EQUALP)(CREDENTIALS (CONS &quot;ACCESS_KEY&quot; &quot;SECRET_KEY&quot;))(BUCKET-NAME &quot;elb-log&quot;))(WITH-ELB-LOG (CREDENTIALS BUCKET-NAME)
+      *ELB-LOG*
+;; =&gt; #S(ELB-LOG.STRUCT:ELB-LOG
+;;       :CREDENTIALS (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)
+;;       :BUCKET-NAME &quot;elb-log&quot;
+;;       :ACCOUNT-ID NIL
+;;       :REGION NIL)
+      *LOG-BUCKET*
+;; =&gt; #S(ELB-LOG.STRUCT:LOG-BUCKET
+;;       :BUCKETS NIL
+;;       :ELB-LOG #S(ELB-LOG.STRUCT:ELB-LOG
+;;                   :CREDENTIALS (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)
+;;                   :BUCKET-NAME &quot;elb-log&quot;
+;;                   :ACCOUNT-ID NIL
+;;                   :REGION NIL)))))</code></pre><div class="codex-doc-node codex-operator codex-macro"><code class="codex-name">with-specified-date-elb-log</code><code class="codex-lambda-list">(date (credentials bucket-name) &amp;body body)</code><div class="codex-docstring">Bind *elb-log* to #S(elb-log credentials bucket-name),
+*log-bucket* to #S(log-bucket bucket *elb-log*),
+*log-date* to date.</div></div><pre><code class="lisp">;; Usage of WITH-SPECIFIED-DATE-ELB-LOG
+(WITH-STUB-MAKE-LOG-BUCKET
+  (LET ((*DEFAULT-TEST-FUNCTION* #'EQUALP)(DATE (ENCODE-TIMESTAMP 0 0 0 0 31 12 2014))(CREDENTIALS (CONS &quot;ACCESS_KEY&quot; &quot;SECRET_KEY&quot;))(BUCKET-NAME &quot;elb-log&quot;))(WITH-SPECIFIED-DATE-ELB-LOG DATE
+        (CREDENTIALS BUCKET-NAME)
+      *LOG-DATE*
+;; =&gt; @2014-12-31T00:00:00.000000Z
+      *ELB-LOG*
+;; =&gt; #S(ELB-LOG.STRUCT:ELB-LOG
+;;       :CREDENTIALS (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)
+;;       :BUCKET-NAME &quot;elb-log&quot;
+;;       :ACCOUNT-ID NIL
+;;       :REGION NIL)
+      *LOG-BUCKET*
+;; =&gt; #S(ELB-LOG.STRUCT:LOG-BUCKET
+;;       :BUCKETS NIL
+;;       :ELB-LOG #S(ELB-LOG.STRUCT:ELB-LOG
+;;                   :CREDENTIALS (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)
+;;                   :BUCKET-NAME &quot;elb-log&quot;
+;;                   :ACCOUNT-ID NIL
+;;                   :REGION NIL)))))</code></pre><div class="codex-doc-node codex-operator codex-macro"><code class="codex-name">with-this-elb-log</code><code class="codex-lambda-list">((credentials bucket-name) &amp;body body)</code><div class="codex-docstring">Bind *elb-log* to #S(elb-log credentials bucket-name),
+*log-bucket* to #S(log-bucket bucket *elb-log*),
+*log-date* to (local-time:today).</div></div><pre><code class="lisp">;; Usage of WITH-THIS-ELB-LOG
+(WITH-STUB-MAKE-LOG-BUCKET
+  (LET ((*DEFAULT-TEST-FUNCTION* #'EQUALP)(CREDENTIALS (CONS &quot;ACCESS_KEY&quot; &quot;SECRET_KEY&quot;))(BUCKET-NAME &quot;elb-log&quot;))(WITH-THIS-ELB-LOG (CREDENTIALS BUCKET-NAME)
+      *LOG-DATE*
+;; =&gt; @2015-09-06T00:00:00.000000Z
+      *ELB-LOG*
+;; =&gt; #S(ELB-LOG.STRUCT:ELB-LOG
+;;       :CREDENTIALS (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)
+;;       :BUCKET-NAME &quot;elb-log&quot;
+;;       :ACCOUNT-ID NIL
+;;       :REGION NIL)
+      *LOG-BUCKET*
+;; =&gt; #S(ELB-LOG.STRUCT:LOG-BUCKET
+;;       :BUCKETS NIL
+;;       :ELB-LOG #S(ELB-LOG.STRUCT:ELB-LOG
+;;                   :CREDENTIALS (&quot;ACCESS_KEY&quot; . &quot;SECRET_KEY&quot;)
+;;                   :BUCKET-NAME &quot;elb-log&quot;
+;;                   :ACCOUNT-ID NIL
+;;                   :REGION NIL)))))</code></pre>
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>
