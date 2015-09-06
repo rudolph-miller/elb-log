@@ -37,7 +37,7 @@
 ((is (scan-to-strings *log-line-scanner* *sample-log*)
      *sample-log*
      "can scan the whole line."))
-(defvar *log-line-scanner* (create-scanner #?/^(\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{6}Z) (.+?) (.+)\:(.+) (.+)\:(.+) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) \"(.+?) (.+?) (.+?)\" \"(.+?)\" (.+?) (.+?)$/))
+(defvar *log-line-scanner* (create-scanner #?/^(\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{6}Z) (.+?) ([\d.]+)\:(\d+) ([\d.]+)\:(\d+) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) \"(.+?) (.+?) (.+?)\" \"(.+?)\" (.+?) (.+?)$/))
 
 @export
 @tests
