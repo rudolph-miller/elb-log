@@ -161,7 +161,19 @@ BUCKET-NAME should be bucket name of ELB log."
 
  (is (log-line-request-protocol obj)
      "HTTP/1.1"
-     "can set request-protocol."))
+     "can set request-protocol.")
+
+ (is (log-line-user-agent obj)
+     "curl/7.38.0"
+     "can set user-agent.")
+
+ (is (log-line-ssl-cipher obj)
+     "-"
+     "can set ssl-cipher.")
+
+ (is (log-line-ssl-protocol obj)
+     "-"
+     "can set ssl-protocol."))
 @doc
 "Struct of ELB log line."
 (defstruct (log-line (:constructor %make-log-line))
@@ -180,7 +192,10 @@ BUCKET-NAME should be bucket name of ELB log."
   (sent-bytes nil :type (or null integer))
   (request-method nil :type (or null string))
   (request-uri nil :type (or null string))
-  (request-protocol nil :type (or null string)))
+  (request-protocol nil :type (or null string))
+  (user-agent nil :type (or null string))
+  (ssl-cipher nil :type (or null string))
+  (ssl-protocol nil :type (or null string)))
 
 @export
 (defun make-log-line (string)
@@ -188,7 +203,7 @@ BUCKET-NAME should be bucket name of ELB log."
                          (#'parse-integer backend-port)
                          (#'read-from-string request-processing-time backend-processing-time response-processing-time)
                          (#'parse-integer elb-status-code backend-status-code received-bytes sent-bytes)
-                         request-method request-uri request-protocol)
+                         request-method request-uri request-protocol user-agent ssl-cipher ssl-protocol)
       (*log-line-scanner* string)
     (%make-log-line :time time
                     :elb-name elb-name
@@ -205,4 +220,7 @@ BUCKET-NAME should be bucket name of ELB log."
                     :sent-bytes sent-bytes
                     :request-method request-method
                     :request-uri request-uri
-                    :request-protocol request-protocol)))
+                    :request-protocol request-protocol
+                    :user-agent user-agent
+                    :ssl-cipher ssl-cipher
+                    :ssl-protocol ssl-protocol)))

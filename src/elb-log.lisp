@@ -58,6 +58,9 @@
                 :log-line-request-method
                 :log-line-request-uri
                 :log-line-request-protocol
+                :log-line-user-agent
+                :log-line-ssl-cipher
+                :log-line-ssl-protocol
                 :make-log-line)
   (:export ;; globals
            :*elb-log*
@@ -109,6 +112,9 @@
            :log-line-request-method
            :log-line-request-uri
            :log-line-request-protocol
+           :log-line-user-agent
+           :log-line-ssl-cipher
+           :log-line-ssl-protocol
 
            ;; macros
            :with-elb-log

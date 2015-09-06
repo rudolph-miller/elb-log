@@ -99,6 +99,18 @@
 
     (is (log-line-request-protocol obj)
         "HTTP/1.1"
-        "can set request-protocol.")))
+        "can set request-protocol.")
+
+    (is (log-line-user-agent obj)
+        "curl/7.38.0"
+        "can set user-agent.")
+
+    (is (log-line-ssl-cipher obj)
+        "-"
+        "can set ssl-cipher.")
+
+    (is (log-line-ssl-protocol obj)
+        "-"
+        "can set ssl-protocol.")))
 
 (finalize)
