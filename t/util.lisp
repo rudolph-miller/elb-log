@@ -18,7 +18,11 @@
 (subtest "*log-line-scanner*"
   (is (scan-to-strings *log-line-scanner* *sample-log*)
       *sample-log*
-      "can scan the whole line."))
+      "can scan the whole line.")
+
+  (is (scan-to-strings *log-line-scanner* *sample-log2*)
+      *sample-log2*
+      "can scan the whole line with empty user-agent."))
 
 (subtest "parse-date"
   (is (parse-date "2014/12/31")

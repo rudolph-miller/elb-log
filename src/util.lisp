@@ -24,6 +24,9 @@
 (defvar *sample-log* "2014-02-15T23:39:43.945958Z my-loadbalancer 192.168.131.39:2817 10.0.0.1:80 0.000073 0.001048 0.000057 200 200 0 29 \"GET http://www.example.com:80/ HTTP/1.1\" \"curl/7.38.0\" - -")
 
 @export
+(defvar *sample-log2* "2014-02-15T23:39:43.945958Z my-loadbalancer 192.168.131.39:2817 10.0.0.1:80 0.000073 0.001048 0.000057 200 200 0 29 \"GET http://www.example.com:80/ HTTP/1.1\" \"\" - -")
+
+@export
 @tests
 ((is (scan-to-strings *key-scanner* *sample-key*)
      *sample-key*
@@ -37,7 +40,7 @@
 ((is (scan-to-strings *log-line-scanner* *sample-log*)
      *sample-log*
      "can scan the whole line."))
-(defvar *log-line-scanner* (create-scanner #?/^(\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{6}Z) (.+?) ([\d.]+)\:(\d+) ([\d.]+)\:(\d+) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) \"(.+?) (.+?) (.+?)\" \"(.+?)\" (.+?) (.+?)$/))
+(defvar *log-line-scanner* (create-scanner #?/^(\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{6}Z) (.+?) ([\d.]+)\:(\d+) ([\d.]+)\:(\d+) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) \"(.+?) (.+?) (.+?)\" \"(.*)\" (.+?) (.+?)$/))
 
 @export
 @tests
