@@ -285,9 +285,10 @@ DATE should be an instance of loca-time:timestamp."
 @doc
 "Return a list of #S(log-line)."
 (defun log-lines (log-key &key (bucket *log-bucket*))
-  (let ((stream (make-string-input-stream (get-string (bucket-name (car (log-bucket-buckets bucket)))
-                                                      (log-key-key log-key)
-                                                      :credentials (log-bucket-elb-log bucket)))))
-    (loop for line = (read-line stream nil)
-          while line
-          collecting (make-log-line line))))
+  (let ((flexi-streams:*substitution-char* #\-))
+    (let ((stream (make-string-input-stream (get-string (bucket-name (car (log-bucket-buckets bucket)))
+                                                        (log-key-key log-key)
+                                                        :credentials (log-bucket-elb-log bucket)))))
+      (loop for line = (read-line stream nil)
+            while line
+            collecting (make-log-line line)))))
