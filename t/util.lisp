@@ -34,6 +34,10 @@
   (is (parse-timestamp "20140215T2339Z")
       (encode-timestamp 0 0 39 23 15 02 2014 :timezone +utc-zone+)
       "can parse YYYYMMDDTHHmmZ."
+      :test #'timestamp=)
+  (is (parse-timestamp "20141015T2339Z")
+      (encode-timestamp 0 0 39 23 15 10 2014 :timezone +utc-zone+)
+      "can parse YYYYMMDDTHHmmZ in October."
       :test #'timestamp=))
 
 (subtest "format-date"

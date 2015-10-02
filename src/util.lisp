@@ -33,7 +33,7 @@
      "can scan the whole key."))
 (defvar *key-scanner* (create-scanner #?/^AWSLogs\/([0-9]{12})\/elasticloadbalancing\/(.+?)\/([0-9]{4}\/[0-9]{2}\/[0-9]{2})\/[0-9]{12}_elasticloadbalancing_.+?_([^_]+)_([0-9]{8}T[0-9]{4}Z)_(.+?)_(.+).log/))
 
-(defvar *timestamp-scanner* (create-scanner #?/^([1-9][0-9]{3})(0[1-9]|11|12)(0[1-9]|[1-3][0-9])T([0-2][0-9])([0-5][0-9])Z$/))
+(defvar *timestamp-scanner* (create-scanner #?/^([1-9][0-9]{3})(0[1-9]|10|11|12)(0[1-9]|[1-3][0-9])T([0-2][0-9])([0-5][0-9])Z$/))
 
 @export
 @tests
